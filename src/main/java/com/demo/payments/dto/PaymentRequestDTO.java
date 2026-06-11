@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class PaymentRequestDTO {
     @NotBlank(message = "el campo 'amount' debe estar completo")
     @Pattern(regexp = "^\\d+(\\.\\d{1,2})?$", message = "el campo 'amount' es inválido")
     @Schema(example = "12.50")
-    private Double amount;
+    private BigDecimal amount;
 
     @NotBlank(message = "el campo 'customerId' debe estar completo")
     @Pattern(regexp = "^\\d+$", message = "el campo 'customerId' es inválido")

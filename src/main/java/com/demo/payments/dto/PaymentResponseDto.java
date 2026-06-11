@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -19,7 +20,7 @@ public class PaymentResponseDto {
     @Schema(example = "1")
     private Long id;
     @Schema(example = "12.50")
-    private Double amount;
+    private BigDecimal amount;
     private Status status;
     private Customer customer;
     @Schema(example = "2026-06-10T18:36:58.000")
