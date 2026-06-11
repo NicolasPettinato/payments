@@ -21,8 +21,8 @@ public class GenericExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 
-    @ExceptionHandler(BussinesException.class)
-    public ResponseEntity<ErrorResponse> bussinessException(BussinesException ex) {
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> bussinessException(BusinessException ex) {
         var errorResponse = getErrorResponse(ex);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
@@ -34,7 +34,7 @@ public class GenericExceptionHandler {
                 .getFieldError()
                 .getDefaultMessage();
 
-        log.error(ex.getMessage());
+        log.error(ex.getMessage(), ex);
 
         var errorResponse = ErrorResponse.builder()
                 .code(ErrorCode.BAD_REQUEST.toString())
@@ -45,7 +45,7 @@ public class GenericExceptionHandler {
     }
 
     private static ErrorResponse getErrorResponse(GenericException ex) {
-        log.error(ObjectConverter.toJson(ex));
+        log.error(ex.getMessage(), ex);
 
         return ErrorResponse.builder()
                 .code(ex.getErrorCode().toString())

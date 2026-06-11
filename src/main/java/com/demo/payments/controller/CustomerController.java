@@ -29,12 +29,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final ObjectConverter objectConverter;
 
     //    POST /customers
     @PostMapping
     @Operation(summary = "crear un nuevo cliente")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Cliente creado exitosamente"),
+            @ApiResponse(responseCode = "201", description = "Cliente creado exitosamente", content = @Content(
+                    mediaType = "application/json", schema = @Schema(implementation = CustomerResponseDTO.class)
+            )),
             @ApiResponse(responseCode = "400", description = "bad request", content = @Content(
                     mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)
             )),
@@ -43,7 +46,7 @@ public class CustomerController {
             )),
     })
     public ResponseEntity<CustomerResponseDTO> createCustomer(@Valid @RequestBody CustomerRequestDTO requestDTO) {
-        log.info("Request: {}", ObjectConverter.toJson(requestDTO));
+        log.info("Request: {}", objectConverter.toJson(requestDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 customerService.createCustomer(requestDTO));
     }

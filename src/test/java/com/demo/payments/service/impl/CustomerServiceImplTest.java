@@ -4,7 +4,7 @@ import com.demo.payments.TestUtils;
 import com.demo.payments.dto.CustomerRequestDTO;
 import com.demo.payments.dto.CustomerResponseDTO;
 import com.demo.payments.entity.Customer;
-import com.demo.payments.exception.BussinesException;
+import com.demo.payments.exception.BusinessException;
 import com.demo.payments.exception.TechnicalException;
 import com.demo.payments.repository.CustomerRepository;
 import com.demo.payments.service.CustomerService;
@@ -47,7 +47,7 @@ class CustomerServiceImplTest {
     void createCustomer_already_exists() {
         when(customerRepository.getCustomerByEmail(any())).thenReturn(customer);
 
-        assertThrows(BussinesException.class, () -> customerService.createCustomer(requestDTO));
+        assertThrows(BusinessException.class, () -> customerService.createCustomer(requestDTO));
     }
 
     @Test

@@ -3,12 +3,11 @@ package com.demo.payments.service.impl;
 import com.demo.payments.dto.CustomerRequestDTO;
 import com.demo.payments.dto.CustomerResponseDTO;
 import com.demo.payments.dto.ErrorCode;
-import com.demo.payments.exception.BussinesException;
+import com.demo.payments.exception.BusinessException;
 import com.demo.payments.exception.TechnicalException;
 import com.demo.payments.mapper.CustomerMapper;
 import com.demo.payments.repository.CustomerRepository;
 import com.demo.payments.service.CustomerService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService {
         var customer = customerRepository.getCustomerByEmail(entity.getEmail());
         if (Objects.nonNull(customer)) {
             log.error("el cliente ya se encuentra registrado");
-            throw new BussinesException(ErrorCode.CUSTOMER_ALREADY_EXISTS, "el cliente ya se encuentra registrado");
+            throw new BusinessException(ErrorCode.CUSTOMER_ALREADY_EXISTS, "el cliente ya se encuentra registrado");
         }
 
         try {
