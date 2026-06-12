@@ -3,6 +3,7 @@ package com.demo.payments.service.impl;
 import com.demo.payments.dto.CustomerRequestDTO;
 import com.demo.payments.dto.CustomerResponseDTO;
 import com.demo.payments.dto.ErrorCode;
+import com.demo.payments.entity.Customer;
 import com.demo.payments.exception.BusinessException;
 import com.demo.payments.exception.TechnicalException;
 import com.demo.payments.mapper.CustomerMapper;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -41,5 +43,16 @@ public class CustomerServiceImpl implements CustomerService {
             throw new TechnicalException(ErrorCode.INTERNAL_ERROR, message);
         }
 
+    }
+
+    @Override
+    public List<CustomerResponseDTO> getCostumers() {
+        return CustomerMapper.toListDto(customerRepository.findAll());
+    }
+
+    @Override
+    public Customer getById(Long customerId) {
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND, "el cliente no se encuentra registrado"));
     }
 }

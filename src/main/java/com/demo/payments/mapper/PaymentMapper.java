@@ -2,16 +2,17 @@ package com.demo.payments.mapper;
 
 import com.demo.payments.dto.PaymentRequestDTO;
 import com.demo.payments.dto.PaymentResponseDto;
+import com.demo.payments.entity.Customer;
 import com.demo.payments.entity.Payment;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class PaymentMapper {
 
-    public static Payment toEntity(PaymentRequestDTO dto) {
+    public static Payment toEntity(PaymentRequestDTO dto, Customer customer) {
         var payment = new Payment();
         payment.setAmount(dto.getAmount());
-        payment.getCustomer().setId(dto.getCustomerId());
+        payment.setCustomer(customer);
         return payment;
     }
 

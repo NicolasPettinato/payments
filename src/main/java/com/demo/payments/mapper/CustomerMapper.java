@@ -5,6 +5,9 @@ import com.demo.payments.dto.CustomerResponseDTO;
 import com.demo.payments.entity.Customer;
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
+import java.util.Objects;
+
 @UtilityClass
 public class CustomerMapper {
 
@@ -21,5 +24,11 @@ public class CustomerMapper {
                 .name(entity.getName())
                 .email(entity.getEmail())
                 .build();
+    }
+
+    public static List<CustomerResponseDTO> toListDto(List<Customer> entityList) {
+        return Objects.isNull(entityList)
+                ? List.of()
+                : entityList.stream().map(CustomerMapper::toDto).toList();
     }
 }

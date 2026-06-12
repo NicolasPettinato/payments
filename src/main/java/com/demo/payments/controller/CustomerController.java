@@ -17,10 +17,9 @@ import org.hibernate.boot.model.source.spi.IdentifierSourceAggregatedComposite;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -52,5 +51,20 @@ public class CustomerController {
     }
 
     //    GET /customers
-
+    @GetMapping
+    @Operation(summary = "Devuelve listado de clientes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Cliente creado exitosamente", content = @Content(
+                    mediaType = "application/json", schema = @Schema(implementation = CustomerResponseDTO.class)
+            )),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content(
+                    mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)
+            )),
+            @ApiResponse(responseCode = "500", description = "Error interno del servicio", content = @Content(
+                    mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)
+            )),
+    })
+    public ResponseEntity<List<CustomerResponseDTO>> createCustomer() {
+        return ResponseEntity.ok().body(customerService.getCostumers());
+    }
 }
